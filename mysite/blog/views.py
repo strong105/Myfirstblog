@@ -3,7 +3,7 @@ from django.utils import timezone
 from django.views import View
 from django.views.generic import CreateView, FormView
 
-from .models import Post, Comments
+from .models import Post, Comment
 from .forms import PostForm, CommentForm
 from django.template import Context, Template
 from django.http import HttpResponse
@@ -20,13 +20,25 @@ class PostListView(ListView, FormView):
 
 
 class CommentCreateView(View):
+
     def post(self, request, post_pk, *args, **kwargs):
-         post = Post.objects.get(pk=post_pk)
-         Comments(
-             author=request.user, text_massage=request.POST['text'],
-             answer_massage=post
-         ).save()
-         return HttpResponseRedirect('/')
+        post = Post.objects.get(pk=post_pk)
+        comment_pk = request.POST.get('comment_pk')
+        if comment_pk:
+            comment = Comment.objects.get(pk=comment_pk)
+
+            Comment(
+                author=request.user, text_massage=request.POST['text'],
+                answer_massage=post, parent=comment
+            ).save()
+
+        else:
+            Comment(
+                author=request.user, text_massage=request.POST['text'],
+                answer_massage=post
+            ).save()
+
+        return HttpResponseRedirect('/')
 
 
 def post_add(request):
@@ -36,7 +48,7 @@ def post_add(request):
             x = form.save(commit = False)
             x.author = request.user
             x.save()
-    return redirect("create_view")
+    return redirect("/")
 
 
 def post_detail(request, pk):

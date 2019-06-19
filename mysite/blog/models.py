@@ -18,6 +18,7 @@
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
+from mptt.models import MPTTModel, TreeForeignKey
 
 
 class Post(models.Model):
@@ -31,18 +32,21 @@ class Post(models.Model):
         return self.title
 
     def comm_count(self):
-        return Comments.objects.filter(answer_massage=self).count()
+        return Comment.objects.filter(answer_massage=self).count()
 
     def comments(self):
-        return Comments.objects.filter(answer_massage=self)
+        return Comment.objects.filter(answer_massage=self)
 
 
-class Comments(models.Model):
+class Comment(MPTTModel):
     date = models.DateTimeField(auto_now=True)
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     text_massage = models.TextField()
     answer_massage = models.ForeignKey(Post, on_delete=models.CASCADE)
-    answer_comment = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True)
+    parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
 
     def __str__(self):
         return str(self.id)
+
+    class MPTTMeta:
+        order_insertion_by = ['date']

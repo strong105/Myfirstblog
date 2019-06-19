@@ -1,8 +1,10 @@
 from django import forms
-from .models import Post, Comments
+from .models import Post, Comment
 
 
 class PostForm(forms.ModelForm):
+
+    text = forms.CharField(label='')
 
     class Meta:
         model = Post
@@ -11,6 +13,8 @@ class PostForm(forms.ModelForm):
 
 class CommentForm(forms.ModelForm):
 
+    text_massage = forms.CharField(label='')
+
     class Meta:
-        model = Comments
+        model = Comment
         fields = ('text_massage',)

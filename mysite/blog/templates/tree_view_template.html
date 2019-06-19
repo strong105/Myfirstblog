@@ -13,31 +13,28 @@
                 <div class="date">
                     {{ post.created_date }}
                 </div>
-                <div>
-                    {% recursetree post.comments %}
-                        <div style="margin: 0 50px 0 50px" class="panel panel-default">
+                {% recursetree answer_comments %}
+                <div style="margin: 0 50px 0 50px">
+                    {% for comment in post.comments %}
+                        <div class="panel panel-default">
                             <div class="panel-heading">
-                              <h3 class="panel-title">{{ node.author }}</h3>
+                              <h3 class="panel-title"><p>{{ comment.author }}</p></h3>
                               </div>
                             <div class="panel-body">
-                                <p>{{ node.text_massage }}</p>
-                                <p>{{ node.date }}</p>
+                                <p>{{ comment.text_massage }}</p>
+                                <p>{{ comment.date }}</p>
                             </div>
-                        {% if not node.is_leaf_node %}
-                            <ul class="children">
-                                {{ children }}
-                            </ul>
-                        {% endif %}
                             {% if user.is_authenticated %}
-                                <form style="margin-left: 10px" action = '{% url "create_comment" post_pk=post.pk %}' METHOD="POST">
-                                    <div>{{ form.as_p }}</div>
-                                    <input type="hidden" name="comment_pk" value="{{ node.pk }}">
+                                <form  action = '{% url "create_comment" post_pk=post.pk %}' METHOD="POST">
+                                    {{ form.as_p }}
+                                    <input type="hidden" name="comment_pk" value="{{ comment.pk }}">
                                     {% csrf_token %}
                                     <button type="submit">Отправить</button>
                                  </form>
                             {% endif %}
                         </div>
-                    {% endrecursetree %}
+                    {% endfor %}
+                {% endrecursetree %}
                 </div>
                 {% if user.is_authenticated %}
                     <form action = '{% url "create_comment" post_pk=post.pk %}' METHOD="POST">

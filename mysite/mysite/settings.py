@@ -26,7 +26,7 @@ SECRET_KEY = '7styxekz_3rz0frsw2&w3r)$w-s3cj5jv1ig$^4cfteg+_9(+='
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blog',
     'social_django',
+    'mptt',
 ]
 
 MIDDLEWARE = [
@@ -88,21 +89,21 @@ DATABASES = {
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
-
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
-]
+#
+# AUTH_PASSWORD_VALIDATORS = [
+#     {
+#         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+#     },
+#     {
+#         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+#     },
+#     {
+#         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+#     },
+#     {
+#         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+#     },
+# ]
 
 
 # Internationalization
@@ -149,9 +150,9 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '422194034142-f21il9opaomdn9mhe6m9r5qbo6paqlch.a
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'x4xTxC0XfAWjEEJZmJRcJTjp'
 
 
-SOCIAL_AUTH_GITHUB_KEY = '7c5d607cbff4ee0aa8ae'
-SOCIAL_AUTH_GITHUB_SECRET = '857e562cdce627e07a5ac1b1b42cbef53cae6277'
+SOCIAL_AUTH_GITHUB_KEY = 'f116ae8dad58c0a420a7'
+SOCIAL_AUTH_GITHUB_SECRET = '9dd701f125f2991057405979f77eda958e266212'
 
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-ALLOWED_HOSTS = ['127.0.0.1', '<study>.pythonanywhere.com']
+# ALLOWED_HOSTS = ['127.0.0.1', '<study>.pythonanywhere.com', 'localhost:8000']
