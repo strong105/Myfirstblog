@@ -1,0 +1,44 @@
+{% load static %}
+<html>
+    <head>
+        <title>Sonek Blog</title>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+        <link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+    </head>
+    <body>
+
+        {% if user.is_authenticated %}
+             <p class="display-4">Привет, {{ user.username }} </p>
+             <br>{{google.id}}
+             <p>Если что, можешь <a href = "{% url 'logout' %}">выйти</a> отсюда </p>
+        {% else %}
+             <a class="lead" href="{% url 'social:begin' 'google-oauth2' %}">Log in with Gmail</a>
+        {% endif %}
+</body>
+    <body>
+{% if user.is_authenticated %}
+             <p class="display-4">Привет, {{ user.username }} </p>
+             <br>{{google.id}}
+             <p>Если что, можешь <a href = "{% url 'logout' %}">выйти</a> отсюда </p>
+        {% else %}
+             <a class="lead" href="{% url 'social:begin' 'github' %}">Log in with GitHub</a>
+        {% endif %}
+</body>
+    <body>
+    <div class="page-header">
+        <h1><a href="/">Sonek blog</a></h1>
+    </div>
+    <div class="content container">
+        <div class="row">
+            <div class="col-md-8">
+            {% block content %}
+                
+            {% endblock %}
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

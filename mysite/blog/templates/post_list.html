@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% for post in object_list %}
+        <div class="post">
+            <div class="date">
+                {{ post.created_date }}
+            </div>
+            <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
+            <p>{{ post.text|linebreaksbr }}</p>
+            {% for comment in post.comments %}
+                    <p>{{ comment.text_massage }}</p>
+                    <p>{{ comment.author }}</p>
+                    <p>{{ comment.date }}</p>
+            {% endfor %}
+            {% if user.is_authenticated %}
+                <form action = '{% url "create_comment" post_pk=post.pk %}' METHOD="POST">
+                    {{ form.as_p }}
+                    {% csrf_token %}
+                    <button type="submit">Отправить</button>
+                </form>
+            {% endif %}
+        </div>
+    {% endfor %}
+    <form action = '{% url "post_add" %}' METHOD="POST">
+    {{form.as_p}}
+        {%csrf_token%}
+        <button type="submit">Отправить</button>
+    </form>
+{% endblock %}
